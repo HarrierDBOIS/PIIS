@@ -43,21 +43,6 @@ elements.forEach((element) => {
         }
     });
 
-    element.addEventListener('dblclick', () => {
-        isStuck = true;
-        element.style.backgroundColor = 'green'; // изменяем цвет элемента
-    });
-
-    element.addEventListener('click', () => {
-        if (isStuck) {
-            isStuck = false;
-            isDragging = false;
-            element.style.backgroundColor = '';
-            element.style.top = initialY + 'px';
-            element.style.left = initialX + 'px';
-            // восстанавливаем исходный цвет элемента
-        }
-    });
 
     document.addEventListener('touchstart', (e) => {
         if (e.touches.length > 1) {
