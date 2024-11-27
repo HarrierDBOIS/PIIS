@@ -51,7 +51,7 @@ function renderMovieDB() {
 }
 
 let personalMovieDB = {
-    private: true,
+    private: false,
     movies: null
 }
 
