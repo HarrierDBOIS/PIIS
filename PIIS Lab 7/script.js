@@ -2,16 +2,29 @@ const svg = document.getElementById('canvas');
 const circleCountElem = document.getElementById('circleCount');
 const rectangleCountElem = document.getElementById('rectangleCount');
 
+// flag, который указывает, происходит ли
+//    рисование в данный момент.
 let isDrawing = false;
-let startX, startY, currentShape;
+
+// Координаты начала рисования.
+let startX, startY;
+
+// Тип фигуры, которую рисуют.
+let currentShape;
+
+// количество нарисованных фигур.
 let circleCount = 0;
 let rectangleCount = 0;
 
+// 3. Обработчик события mousedown.
+//    Он начинает рисование.
 svg.addEventListener('mousedown', event => {
     isDrawing = true;
     startX = event.offsetX;
     startY = event.offsetY;
 
+    // 4. Определение типа фигуры, которую
+    //    рисуют.
     const shapeSelector = document.getElementsByName('shape');
     let selectedValue;
     for (const shape of shapeSelector) {
@@ -21,6 +34,8 @@ svg.addEventListener('mousedown', event => {
         }
     }
 
+    // 5. Создание элемента circle или rect,
+    //    в зависимости от выбранного типа.
     if (selectedValue === 'circle') {
         currentShape = document.createElementNS(
             'http://www.w3.org/2000/svg',
@@ -45,6 +60,8 @@ svg.addEventListener('mousedown', event => {
     }
 });
 
+// 6. Обработчик события mousemove.
+//    Он рисует фигуру.
 svg.addEventListener('mousemove', event => {
     if (!isDrawing) return;
 
@@ -52,6 +69,8 @@ svg.addEventListener('mousemove', event => {
     const currentY = event.offsetY;
 
     if (currentShape) {
+        // 7. изменение размера фигуры,
+        //    в зависимости от типа.
         if (currentShape.tagName === 'circle') {
             const radius = Math.sqrt(
                 Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2)
@@ -69,9 +88,13 @@ svg.addEventListener('mousemove', event => {
     }
 });
 
+// 8. Обработчик события mouseup.
+//    Он прекращает рисование.
 svg.addEventListener('mouseup', () => {
     isDrawing = false;
     if (currentShape) {
+        // 9. 保存 нарисованной
+        //    фигуры.
         if (currentShape.tagName === 'circle') {
             circleCount++;
             circleCountElem.textContent = circleCount;
@@ -81,5 +104,7 @@ svg.addEventListener('mouseup', () => {
         }
     }
 
+    // 10. обнуление
     currentShape = null;
 });
+
